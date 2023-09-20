@@ -1,5 +1,6 @@
 # FUSION distribution repository
-This repository provides an alternative download location for the FUSION/LDV lidar data visualization and analysis software.
+This repository provides an alternative download location for the FUSION/LDV lidar data visualization and analysis software. The primary
+download site for FUSION is [here](http://forsys.sefs.uw.edu/fusion/fusionlatest.html).
 
 FUSION is distributed in two forms. The first is a very simple installer that does not modify the windows registry or copy
 files to system folders. This installer drives IT folks crazy because it does not follow most of the "normal" installation
