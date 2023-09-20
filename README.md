@@ -15,7 +15,7 @@ FUSION (V3.40+) supports reading and writing of compressed LAS data files by lin
 libraries. To take advantage of this capability, you will eed to install LAStools and manually copy the LASzip.dll and LASzip64.dll files into 
 FUSION's install folder.
 
-LAStools can be found [here](http://rapidlasso.com/lastools/) or [here](http://lastools.org/).
+LAStools can be found [here](https://rapidlasso.de/product-overview/) or [here](http://lastools.org/).
 
 
 
