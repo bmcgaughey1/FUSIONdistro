@@ -12,7 +12,7 @@ General information regarding FUSION is available [here](http://forsys.sefs.uw.e
 Example data for use with FUSION is available [here](http://forsys.sefs.uw.edu/fusion/fusionlatest.html).
 
 FUSION (V3.40+) supports reading and writing of compressed LAS data files by linking to Martin Isenburg's LASzip.dll and LASzip64.dll 
-libraries. To take advantage of this capability, you will eed to install LAStools and manually copy the LASzip.dll and LASzip64.dll files into 
+libraries. To take advantage of this capability, you need to install LAStools and manually copy the LASzip.dll and LASzip64.dll files into 
 FUSION's install folder.
 
 LAStools can be found [here](https://rapidlasso.de/product-overview/) or [here](http://lastools.org/).
