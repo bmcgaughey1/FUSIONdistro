@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="Author" content="Bob McGaughey">
+  <title>FUSION Version Check</title>
+</head>
+
+<body>
+
+<center>
+<img src="fusion_splash.jpg" border="0" height="315" width="520"></center>
+<hr width="100%">
+
+<center>
+<h2>"The Latest Version"</h2>
+</center>
+
+<center>
+Version 4.50 is the latest version of FUSION. 
+<hr width="100%">
+
+<p>May 19, 2022 update</p>
+
+<p>I have received several reports from people having trouble running FUSION and command line tools. They are getting an error
+that indicates that a required component (mfc140.dll) is missing from their system. So far, this problem seems to be related
+to a recent windows update and may be limited to specific brands of computers. You can fix the problem by downloading and
+installing the Microsoft Visual C++ 2015 Redistributables from the following link. You will need to download and install
+both the 32-bit (vc_redist.x86.exe) and the 64-bit (vc_redist.x86.exe) versions. </p>
+
+<p><a href="https://www.microsoft.com/en-us/download/details.aspx?id=52685">Microsoft Visual C++ 2015 Redistributables</a> </p>
+
+<p><strong>Version 4.40 includes a few bug fixes and somewhat major changes regarding the logic used when working with 
+DTM files with gaps between adjacent tiles and surface models with different resolutions.
+Logic changes related to grid alignment when coordinates have negative values that only affect operations where X or Y values are negative.
+Changes to "fix" problems using wildcards to specify files to command line problems. Windows expands wildcard searches like *.las to include files
+with .lasx extension. This behavior has long caused problems. New logic has been added to all programs that use point data to drop non point files
+from the set of input files built using the wildcard specifier.</p>
+
+<p><strong><span style="color:#ff0000">Version 4.30 includes a major bug fix for the GridMetrics program. Several of the intensity metrics were
+being computed incorrectly when the /strata option was used. Namely the L-moment and percentile metrics. All intensity metrics were correct when the 
+/strata option was not used on the command line. All users should update their version of FUSION.</span></p>
+
+<p><strong><span style="color:#ff0000">Version 4.20 fixes some major problems for all programs that write LAS/LAZ files. 
+Basically everything worked if input files all used the same
+version of the LAS format but when inputs included files of different versions, most tools that write LAS/LAZ files failed. The problem was
+related to a mismatch in the version number and header size for the output file.</span></p>
+
+<p><strong><span style="color:#ff0000">The website for FUSION changed several years ago. The new site is <a
+href="http://forsys.sefs.uw.edu/fusion/fusion_overview.html">http://forsys.sefs.uw.edu/fusion_overview.html</a>
+Please update any bookmarks to reflect the new site. The old forsys.cfr.washington.edu site is
+currently being redirected to the new site but this could end at any time.</span></strong></p>
+
+<p>FUSION (V3.40+) supports reading and writing of compressed LAS data files by linking to Martin Isenburg's
+LASzip.dll and LASzip64.dll libraries. To take advantage of this capability, you will eed to install
+LAStools and manually copy the LASzip.dll and LASzip64.dll files into FUSION's install folder.</p>
+</center>
+
+<p style="text-align:center;margin-left:auto;margin-right:auto;">LAStools can
+be found here: <a
+href="http://rapidlasso.com/lastools/">http://rapidlasso.com/lastools/</a> or
+here: <a href="http://lastools.org/">http://lastools.org/</a></p>
+
+<center>
+<p style="text-align:center;margin-left:auto;margin-right:auto;">If you have an
+earlier version of FUSION, you should upgrade to take advantage of several new
+features and bug fixes. </p>
+
+<p>If you are upgrading from version 4.00 or higher, you can simply install the new version of FUSION
+to the same folder as the old version. To upgrade from older versions, first remove the old version by 
+deleting the install folder. FUSION does not add components to any windows folders and it does not register an
+"uninstaller" so it won't show up on the list of installed programs. Then install
+the new version into the same folder as the previous version. If you have data or settings files in 
+the FUSION install folder, you can just delete application files and application
+extensions from the FUSION install folder instead of the entire folder and then prceed with the install.</p>
+<hr width="100%">
+
+<p><a href="/software/fusion/fusionnotes.txt">Release notes describing changes to FUSION</a> </p>
+
+<p><a href="/software/fusion/FUSION_manual.pdf">Manual describing FUSION/LDV and the LIDAR
+Toolit (LTK)</a> (3.2 Mb)</p>
+
+<p>You can download FUSION from the following location:</p>
+
+<p><a href="/software/fusion/fusionlatest.exe">Install file</a> (13.4 Mb)</p>
+
+<p>If you have trouble downloading and/or running the install file due to windows security or windows policy restrictions, you can download this
+archive and simply extract the files into the install folder of your choice. The FUSION distribution includes all required components
+and does not need to be "installed".</p>
+
+<p><a href="/software/fusion/fusionlatest.zip">Install archive</a> (13.4 Mb)</p>
+
+<table style="border-collapse: collapse;" border="1" cellpadding="0"
+cellspacing="0" width="100%">
+  <tbody>
+    <tr>
+      <td align="center" width="25%">zip Archive
+         </td>
+      <td align="center" width="25%">Installer
+         </td>
+      <td width="50%">Description</td>
+    </tr>
+    <tr>
+      <td align="center" width="25%"><a href="/software/fusion/FUSION_ExampleData.zip">Example
+        data</a> (State Plane, WA south zone) (106 Mb) <br>
+         </td>
+      <td align="center" width="25%"><a href="/software/fusion/FUSION_ExampleData.exe">Example
+        data</a> (State Plane, WA south zone) (128 Mb) <br>
+         </td>
+      <td width="50%">This is the original example data distributed with FUSION
+        prior to September 2008. If you are using the tutorials produced by the
+        Forest Service Geospatial Technology and Applications Center (GTAC), you need to
+        use these data.</td>
+    </tr>
+    <tr>
+      <td align="center" width="25%"><a
+        href="/software/fusion/FUSION_ExampleData_UTM.zip">Example data</a> (UTM, zone 10) (102
+        Mb) <br>
+         </td>
+      <td align="center" width="25%"><a
+        href="/software/fusion/FUSION_ExampleData_UTM.exe">Example data</a> (UTM, zone 10) (104
+        Mb) <br>
+         </td>
+      <td width="50%">This is an example data set covering the same area as the
+        State Plane example but locations and elevations are in UTM meters
+        (zone 10). These data will not work with all of the RSAC tutorials.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><font color="#000000"><a href="fusion_overview.html">General information
+regarding FUSION</a></font></p>
+
+<hr width="100%">
+<blockquote>FUSION is developed at the US Department of Agriculture, Forest Service,
+Pacific Northwest Research Station by an employee of the Federal Government
+in the course of his official duties. Pursuant to Title 17, Section 105 of
+the <i>United States Code</i>, this software is not subject to copyright
+protection and is in the public domain. FUSION is primarily a research tool.
+USDA Forest Service assumes no responsibility whatsoever for its use by other
+parties, and makes no guarantees, expressed or implied, about its quality,
+reliability, or any other characteristic.</blockquote>
+<hr width="100%">
+
+</center>
+<br>
+  </body>
+</html>
