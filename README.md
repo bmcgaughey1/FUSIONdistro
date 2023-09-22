@@ -11,6 +11,10 @@ procedures and does not register an uninstaller. The second (fusionlatest.zip) i
 that can be unzipped into any folder. This option is useful on some systems where administrators prevent installation of new software 
 packages. 
 
+To install FUSION, click one of the files mentioned in the previous paragraph. This should present you with a message that GitHub can't
+show you files this large. Click the download icon at the upper right part of the screen and save the file to your local computer. Then either
+run the installer (fusionlatest.exe) or unzip the archive (fusionlatest.zip) to install FUSION.
+
 General information regarding FUSION is available [here](http://forsys.sefs.uw.edu/fusion/fusion_overview.html).
 
 Example data for use with FUSION is available [here](http://forsys.sefs.uw.edu/fusion/fusionlatest.html).
