@@ -5,9 +5,9 @@ download site for FUSION is [here](http://forsys.sefs.uw.edu/fusion/fusionlatest
 There is a separate, FUSION-related, repository containing scripts for use with FUSION's AreaProcessor tool 
 [here](https://github.com/bmcgaughey1/FUSIONscripts).
 
-FUSION is distributed in two forms. The first is a very simple installer that does not modify the windows registry or copy
+FUSION is distributed in two forms. The first (fusionlatest.exe) is a very simple installer that does not modify the windows registry or copy
 files to system folders. This installer drives IT folks crazy because it does not follow most of the "normal" installation
-procedures and does not register an uninstaller. The second is a simple archive with all of the executables and documentation
+procedures and does not register an uninstaller. The second (fusionlatest.zip) is a simple archive with all of the executables and documentation
 that can be unzipped into any folder. This option is useful on some systems where administrators prevent installation of new software 
 packages. 
 
