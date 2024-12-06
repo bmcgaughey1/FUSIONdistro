@@ -1,4 +1,24 @@
-FUSION 4.40
+Version 4.61 Changes
+Minor change related to saving parameters for FUSION projects (.dvz files). Decimate interval was being saved as 0 which causes
+a crash when reading a stored project and trying to do a sample.
+
+Version 4.60 Changes
+Added support for reading COPC format point data and use the COPC index in FUSION.exe so you don't need index files when using COPC format
+point data. Added support for GeoTiff images in FUSION.exe so you no longer need world files when using GeoTiff images. Minor changes including a
+new option in AreaProcessor that is helpful when running AreaProcessor workflows on the Forest Service VDI environment.
+
+FUSION 4.51
+Version 4.51 Changes
+This is a minor update that adds a few of the 64-bit versions of programs that were omitted in version 4.50.
+Also includes a change to TreeSeg that results in smoother crown perimeters for segmented trees.
+
+FUSION 4.50
+Version 4.50 Changes
+A few bug fixes, upgrade to MSVS 2022. Fixed a somewhat major bug in FilterData that was occurring intermittently with high-density data 
+and large filter window sizes (50m+). Further refinements to the logic in FUSION/LDV that allows you to move individual plots and trees
+so field data better aligns with point cloud data. There is a new appendix in the manual describing the plot/tree adjustment process.
+
+Version 4.40 Changes
 A few bug fixes and somewhat major changes regarding the logic used when working with DTM files with gaps between adjacent tiles and surface models with different resolutions.
 Logic changes related to grid alignment when coordinates have negative values that only affect operations where X or Y values are negative.
 Changes to "fix" problems using wildcards to specify files to command line problems. Windows expands wildcard searches like *.las to include files
@@ -54,5 +74,5 @@ USDA Forest Service
 University of Washington
 PO Box 352100
 Seattle, WA  98195-2100
-(206) 543-4713 (not currently at this number due to COVID restrictions)
-robert.mcgaughey@usda.gov
+(206) 276-2577
+robert.mcgaughey@usda.gov (prefer contact via email)
