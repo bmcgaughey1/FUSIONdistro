@@ -1,3 +1,21 @@
+Version 4.61 Changes
+Minor change related to saving parameters for FUSION projects (.dvz files). Decimate interval was being saved as 0 which causes
+a crash when reading a stored project and trying to do a sample.
+
+Version 4.60 Changes
+Added support for reading COPC format point data and use the COPC index in FUSION.exe so you don't need index files when using COPC format
+point data. Added support for GeoTiff images in FUSION.exe so you no longer need world files when using GeoTiff images. Minor changes including a
+new option in AreaProcessor that is helpful when running AreaProcessor workflows on the Forest Service VDI environment.
+
+Version 4.51 Changes
+This is a minor update that adds a few of the 64-bit versions of programs that were omitted in version 4.50.
+Also includes a change to TreeSeg that results in smoother crown perimeters for segmented trees.
+
+Version 4.50 Changes
+A few bug fixes, upgrade to MSVS 2022. Fixed a somewhat major bug in FilterData that was occurring intermittently with high-density data 
+and large filter window sizes (50m+). Further refinements to the logic in FUSION/LDV that allows you to move individual plots and trees
+so field data better aligns with point cloud data. There is a new appendix in the manual describing the plot/tree adjustment process.
+
 Version 4.40 Changes
 A few bug fixes and somewhat major changes regarding the logic used when working with DTM files with gaps between adjacent tiles and surface models with different resolutions.
 Logic changes related to grid alignment when coordinates have negative values that only affect operations where X or Y values are negative.
@@ -8,6 +26,173 @@ Version 4.30 Changes
 Version 4.30 includes a major bug fix for the GridMetrics program. Several of the intensity metrics were being computed incorrectly when 
 the /strata option was used. Namely the L-moment and percentile metrics. All intensity metrics were correct when the /strata option was 
 not used on the command line. It also includes a minor fix to the LDV viewer that may affect some users.
+
+************************************************************************************
+9/5/2024 FUSION 4.61 release   *****************************************************
+************************************************************************************
+9/5/2024 FUSION 4.51
+Fixed a problem with the COPC resolution and decimate interval. The setting for the COPC resolution was being saved as the decimate interval
+in .dvz files. This caused a crash when reading a stored project and trying to do a sample.
+
+************************************************************************************
+8/29/2024 FUSION 4.60 release   ***************************************************
+************************************************************************************
+8/12/2024 CloudMetrics V2.76 and GridMetrics V3.74
+Fixed the logic associated with the /rgb option to work correctly with LAS V1.4 files containing RGB information. Also added support for the NIR channel. Option
+uses "N" to select the NIR channel for metrics.
+
+5/31/2024 Several programs
+Fixed a problem related to the laszip.dll used to read/write LAS/LAZ files. The problem was causing V1.4 output files to be truncated and 
+invalid when reading from V1.4 files. However, the problem didn't occur with all V1.4 files input files. I ran into the problem with files 
+produced by the rLas R package but don't know exactly what was different about the files of if there is something "wrong" with the files.
+LAStools-lasinfo did not report any problems with the files but I have tested programs with similar V1.4 LAS/LAZ files. Regardless, the code 
+now handles the offending files correctly. This change affects programs that write LAS files (ClipData, PolyClipData, FilterData, FirstLastReturn, 
+GroundFilter, MergeData, and ThinData.
+
+5/16/2024 LDA2LAS V1.50
+Modified code to drop COPC info VLR and COPC hierarchy EVLR when converting a COPC file into LAS or LAZ format. None of the FUSION
+tools support COPC writing. While it might be possible to preserve the COPC indexing if converting an entire file, the index 
+will be destroyed by sequentially reading and writing points because the point compression blocks will not correspond to the octree 
+index arrangement. Regardless, converting an entire file from COPC/LAZ to COPC/LAZ doesn't really make sense anyway.
+
+5/14/2024 Several programs
+Added support for reading COPC format point files and use of COPC index to read data covering specific areas of interest. Affected programs are 
+those that support /grid, /gridxy, /align, and /extent command line options (GridMetrics, CanopyModel, ReturnDensity, GridSurfaceCreate, 
+and DensityMetrics). Also affected ClipData, PolyClipData, ThinData, GroundFilter, TreeSeg, and FUSION.
+
+Also modified code that writes LAS/LAZ files to drop COPC index information from the header of new files. There is no support for writing COPC
+format files in any FUSION program. This change affects all programs that write LAS/LAZ files. Programs affected by this change (in addition to 
+those mentioned in the change above): FilterData, FirstLastReturn, and MergeData.
+
+4/26/2024 FUSION 4.50
+Added support for COPC formatted point files. This allows you to use COPC files without creating separate index files and takes advantage
+of LAZ compression with no performance hit. Previous versions of FUSION did not work with LAZ files so this is an important new capability.
+
+Also added a control to the sample options dialog to control the point spacing for COPC files. For example, setting the minimum spacing
+to 10.0 will display points spaced at least 10 units apart (based on the COPC chunk spacing). There is also logic in place to adjust the 
+minimum point spacing so it always includes the lowest resolution chunks in the sample. This means you can set the minimum point spacing to
+large value (100 for example) and you should always get points in samples from COPC files. Setting the minimum point spacing to 0.0 will
+include all points in the sample regardless of the point spacing for the chunks.
+
+Also added support for geoTiff files and reading coordinate information from the image. This means that you no longer need world files
+if you are using GeoTiff files as a background image in FUSION.
+
+2/28/2024 Potentially affects all programs that read point data
+Corrected a problem in the way the extended_scan_angle was being used for LAS version 1.4+. Previous code did not use this value
+to populate an internal value for scan angle (used the old format's scan rank field). This was causing problems in FUSION when
+trying to color points by nadir angle. It might also cause problems for other programs but I haven't noticed anything.
+
+1/31/2024 AreaProcessor V1.92
+Added option to keep the drive letter on the path for the list of input tiles. Previous versions stripped of the drive letter
+from this path when writing BLOCK processing batch files but I don't know why this behavior was put in place. The new option is 
+on the Processing Options dialog and is off by default. When testing on the Forest Service VDI environment, the missing drive
+letter was causing processing to fail. If using this environment, be sure to check this option on the Processing Options dialog.
+
+1/3/2024 FUSION V4.44
+Modified the behavior when you have an image loaded and you make changes to the point data (add or delete point files). Previous version would
+clear the current image and create a new temporary image using the tile footprints. The change preserves the current image (if not temporary)
+when changes are made to the point files.
+
+Also corrected a problem with the code to read TIFF images. Variable types for two directory variables were not correct (4-byte unsigned integers
+instead of 8-byte unsigned integers). This error was not causing a crash or throwing an error but images would not load and display. This error
+affects any FUSION programs that read TIFF images, however, only the main FUSION program allows TIFF format images so the error may not
+actually affect any other programs in the FUSION program set.
+
+************************************************************************************
+12/11/2023 FUSION 4.51 release   ***************************************************
+************************************************************************************
+
+10/13/2023 TreeSeg V1.93
+Further refinements to the logic that smooths crown perimeters. I was still seeing cases where one radii would be very short and the two adjacent
+radii were long. This produces an inward spike that wasn't being dealt with by the logic from 2/17/2022.
+
+************************************************************************************
+9/22/2023  FUSION 4.50 release   ***************************************************
+************************************************************************************
+9/6/2023 DTM2ASCII V1.42 also affects all programs that write ASCII raster format by converting from .dtm format.
+Made additional changes in the .dtm handling class to deal with files larger than 2Gb. Changed variable type used for fseek() calls to an 
+8-bit integer. Related changes were made 3/4/2023 but didn't include a change to the variable type from a 4-byte signed integer to an 8-bit 
+value so overflow would happen with large files in two functions in the class. This change could also affect programs that work with .dtm
+files too large to be loaded into memory. I have not seen the problem in practice but the code involved in this fix is also used in the patch
+reading code used when working with large .dtm files that won't fit into memory.
+
+8/25/2023 LDV 1.71
+Additional work on tree/plot movement logic. Added recognition for tree object(s) with label set to PLOT_CENTER. Tree movement dialog
+has an additional button to move the marker to this object and a special symbol is drawn for this object. Marker size is tied to the 
+tree DBH so there is some control over the size. Color is white and the tree color (if specified, otherwise black)
+
+8/15/2023 GridMetrics V3.73
+Changed the logic used to compute variance and standard deviation to use a more mathematically robust algorithm. Previous code was not showing any problems but
+the method used for the statistics was prone to numerical instability. The new method is the same that was being used for CloudMetrics and strata metrics in
+GridMetrics. Not sure why the code wasn't changed when strata metrics were added.
+
+8/15/2023 FilterData V1.72
+Turns out the problem with the calculations (8/7/2023) was not related to the data type but rather the use of an unstable algorithm
+for computing standard deviation (variance). I implemented a different algorithm that is numerically stable.
+
+8/7/2023 FilterData V1.71
+Corrected a problem when filtering high-density data sets with a relatively large window. The array used to accumlate the sum of the 
+squared elevation values was using a float data type. This type could not handle large values. Type was changed to double. Also changed
+the message when no points were reclassified or removed from the data. Old message made it sound like no data was written to the output
+file.
+
+6/26/2023 FUSION V4.43
+Corrected logic to clear an existing image when loading new point data. Previous versions would retain the image for the old data and not
+create a new image for the new data. Also made some adjustments to the initial size of the control panel on the FUSION display in an attempt to
+prevent controls from being hidden.
+
+6/23/2023 JoinDB V1.01
+Dropped /skipfilecheck and /nolaszipdll from syntax display. Also verified that input cannot be in DBF format. The
+option to have DBF input was initially considered but code to read and write DBF format was not implemented.
+
+6/23/2023 DensityMetrics V1.41
+Removed /extent from the list of available options. It was being treated as a valid option but is not supported in DensityMetrics.
+Also fixed a problem where there was an error message about no valid files in input when syntax was printed. This was an unexpected
+(undetected?) side effect of changes on 5/18/2022.
+
+6/23/2023 LTKStatusMonitorMDI V1.23
+Modified the layout of the status dialog so controls are more likely to fit within the dialog without using scroll bars. Previously,
+some controls were off screen requiring the scroll bars. However, using the scroll bars didn't always scroll the dialog as expected
+and some controls were remaining off screen. This seems to be an interaction with the scaling for fonts (global windows setting) and
+the behavior varied depending on the monitor resolution and scaling setting. The scroll bars (when active) still have strange behavior
+but the controls remain visible. If the dialog has scroll bars when it is first displayed, it is likely that the controls on the right 
+and bottom edges will be partially off screen. Scrolling the dialog will not bring the controls fully into view. However, if the dialog
+first opens with no scroll bars, resizing works as expected and you can make the dialog small enough to activate the scroll bars with
+all controls visible as you scroll the dialog.
+
+6/23/2023 AreaProcessor V1.91
+Corrected problem reading and writing parameters. User adjusted block height was not being written or read correctly 
+and the height was being set to the same value as the block width.
+Also modified dialogs that show point tile, ground model, and density raster layouts to display the correct title in the header.
+
+Made a change so that problems with ground models (minimum elevation greater than maximum elevation) do not prevent layout creation. I
+ran into some cases where ground models along coast lines have only negative values. For some of these, the minimum and maximum values was not
+being reported correctly in the header. the exact behavior seemed to depend on the method used to convert the DEM from their original format
+into the .dtm format. This change should allow people to continue with processing. However, there could be some odd results in areas covered
+by the ground models.
+
+9/8/2022 Move to Indiana...no work on FUSION code until June 2023.
+
+8/5/2022 FUSION V4.42
+Fixed a problem that cause the image in FUSION to jump around as you zoom in/out. This has been a problem for a long time so the fix was way overdue!
+
+Also fixed a problem with the DTM class (used in many programs) that was causing a memory leak in certain situations. In FUSION , the problem came up
+when loading a FUSION project where the ground or canopy model files didn't exist. Everything behaved correctly but memory was not being freed as it 
+should have been. This could lead to a problem if you tried to open a whole bunch of projects that had missing files (not really very likely given the number of
+times you would have to do this before causing any problems). 
+
+Fixed another problem related to redraws where FUSION would hang and crash if you tried to zoom in/out quickly when the project included several POI 
+or tree files.
+
+7/15/2022 LDV V1.69
+Additional work on the features to allow movement of individual trees within the point cloud. This set of features is still considered experimental
+but has been used for some projects. 
+
+6/28/2022 LDV V1.68
+Changed the logic used to draw tree objects so it clips objects to the extent of the data and not the scaling extent. For large samples
+(XY extent is larger than Z extent), the old logic was not a problem. For small areas, the Z extent is often larger than the XY extent so
+you would end up displaying trees outside the actual XY data extent. The new logic also considers the size of the crown when determining which
+trees to draw. You should only have trees that have crowns that overlap the actual data extent (bounding XY box).
 
 ************************************************************************************
 5/15/2022  FUSION 4.40 minor release   *********************************************
@@ -41,7 +226,7 @@ to select trees for inclusion in the sample. The new option in File...Preference
 use the crown radius as originally intended. The old logic was using the crown diameter so it was including more trees than intended.
 
 Working on logic to allow adjustment of individual trees for position and orientation (lean). This includes some new options in preferences and a new dialog
-to provide an interface to the new capabilites. All of these changes are considered experimental in version 4.40 but will stabilize soon.
+to provide an interface to the new capabilites in LDV. All of these changes are considered experimental in version 4.40 but will stabilize soon.
 
 4/14/2022 LDV V1.67
 After 16 years of having the default axis color in LDV set to match the background color, I finally changed the default to light gray
@@ -64,7 +249,7 @@ error does not affect areas where both the X and Y values for coordinates are po
 Version numbers were not modified for most programs for this change.
 
 3/7/2022 AreaProcessor V1.89
-Added logic to check for potential cases where the length of output file names (including the path) exceed 260 chacters. This is the limit for the functions used by most of the FUSION 
+Added logic to check for potential cases where the length of output file names (including the path) exceed 260 characters. This is the limit for the functions used by most of the FUSION 
 programs. When the full paths exceed 260 characters, things fail such that some output files (shorter file specifiers) are produced and others are not (longer file specifiers). The 
 new logic assumes that users are using the standard distribution scripts for processing. If someone is using their own scripts to drive the processing, they can still produce a 
 processing layout and generate batch files. If you choose to do this, make sure the logic in your batch files does not produce files specifiers longer than 260 characters.
